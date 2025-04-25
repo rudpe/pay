@@ -1,14 +1,21 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="https://www.thymeleaf.org">
 <head>
+    <link rel="stylesheet" th:href="@{/css/main.css}">
     <meta charset="UTF-8">
     <title>Payment result</title>
 </head>
 <body>
-  <h1>Payment result</h1>
-  <h1>Result</h1>
-  <p th:text="'amount: ' + ${paymentResult.amount}" />
-  <p th:text="'podpis ok: ' + ${paymentResult.signValid}" />
-  <a href="/request">New payment</a>
+    <div class="container">
+        <div class="content">
+            <p th:text="'Transaction: ' + ${paymentResult.number}"/>
+            <p th:text="'Amount: ' + ${paymentResult.amount}"/>
+            <p th:text="'Sign ok: ' + ${paymentResult.signValid}"/>
+            <p th:if="${paymentResult.state == 'OK'}" class="state-ok">Zaplatené</p>
+            <p th:if="${paymentResult.state == 'FAIL'}" class="state-fail">Zlyhala platba</p>
+            <p th:if="${paymentResult.state == 'PENDING'}" class="state-pending">Čakajúca platba</p>
+            <a href="/request">New payment</a>
+        </div>
+    </div>
 </body>
 </html>

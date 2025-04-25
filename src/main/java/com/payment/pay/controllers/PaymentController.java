@@ -11,6 +11,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 
 @Controller
 public class PaymentController {
@@ -34,19 +37,18 @@ public class PaymentController {
     @GetMapping("/rurl")
     public String paymentResult(Model model, @RequestParam("Result") String result, @RequestParam("Sign") String sign, @RequestParam("Amount") String amount) {
         boolean signValid = paymentService.validateResponseSign(paymentConst.getMsTxnId(), amount, paymentConst.getCurrAlphaCode(), result, paymentConst.getKey(), paymentConst.getMid(), sign);
-        model.addAttribute("paymentResult", new PaymentResult(amount, signValid));
+        model.addAttribute("paymentResult", new PaymentResult(amount, signValid, paymentConst.getMsTxnId(), result));
         return "rurl";
     }
 
     @PostMapping("/payment")
-    public Object paymentSubmit(@ModelAttribute Payment payment, Model model) {
-        String amount = String.valueOf(payment.getAmount());
-
+    public Object paymentSubmit(@ModelAttribute Payment payment) {
+        String timeStamp = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss").format(LocalDateTime.now());
+        paymentConst.setTimestamp(timeStamp);
         paymentConst.setMsTxnId(paymentService.getPaymentUniqueId());
-        //model.addAttribute("payment", payment);
         ResponseEntity<String> responseLicenseCheck = paymentRestClient.getPaymentRestClient().post()
                 .uri("pay_gate/paygt")
-                .body(paymentService.getPaymentBody(paymentConst, amount))
+                .body(paymentService.getPaymentBody(paymentConst, payment.getAmountFormated()))
                 .contentType(MediaType.APPLICATION_FORM_URLENCODED)
                 .retrieve()
                 .toEntity(String.class);

@@ -1,13 +1,20 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="https://www.thymeleaf.org">
 <head>
+    <link rel="stylesheet" th:href="@{/css/main.css}">
     <meta charset="UTF-8">
     <title>24pay</title>
 </head>
 <body>
-<form action="#" th:action="@{/payment}" th:object="${payment}" method="post">
-    <p>Amount: <input type="text" th:field="*{amount}" /></p>
-    <p><input type="submit" value="Submit" /> <input type="reset" value="Reset" /></p>
-</form>
+    <div class="container">
+        <div class="content">
+            <img src="https://24-pay.sk/wp-content/uploads/2023/05/24-pay-logo-white-bg.png" class="payment-logo">
+             <form action="#" th:action="@{/payment}" th:object="${payment}" method="post">
+                 <label>Amount</label><br />
+                 <input class="amount-input" type="number" min="1" step="0.01" placeholder="0.00" th:field="*{amount}" pattern="\d*(\.[0-9][0-9])?$"/><br />
+                 <input class="payment-button" type="submit" value="Zaplatiť"/>
+             </form>
+        </div>
+    </div>
 </body>
 </html>
