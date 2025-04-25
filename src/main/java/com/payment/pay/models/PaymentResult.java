@@ -2,15 +2,17 @@ package com.payment.pay.models;
 
 public class PaymentResult {
     private String amount;
+    private String currency;
     private Boolean signValid;
     private String number;
     private String state;
 
-    public PaymentResult(String amount, Boolean signValid, String number, String state) {
+    public PaymentResult(String amount, Boolean signValid, String number, String state, String currency) {
         this.amount = amount;
         this.signValid = signValid;
         this.number = number;
         this.state = state;
+        this.currency = currency;
     }
 
     public String getAmount() {
@@ -43,5 +45,13 @@ public class PaymentResult {
 
     public void setState(String state) {
         this.state = state;
+    }
+
+    public String getCurrency() {
+        return currency;
+    }
+
+    public void setCurrency(String currency) {
+        this.currency = currency;
     }
 }

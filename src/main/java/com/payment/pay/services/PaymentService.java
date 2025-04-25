@@ -5,6 +5,8 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Random;
 
 @Component
@@ -23,6 +25,10 @@ public class PaymentService {
 
     public String getPaymentUniqueId() {
         return String.valueOf(new Random().nextInt(10000));
+    }
+
+    public String getPaymentTimestamp() {
+        return DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss").format(LocalDateTime.now());
     }
 
     public MultiValueMap<String, String> getPaymentBody(PaymentConst paymentConst, String amount) {

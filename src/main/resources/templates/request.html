@@ -2,6 +2,7 @@
 <html lang="en" xmlns:th="https://www.thymeleaf.org">
 <head>
     <link rel="stylesheet" th:href="@{/css/main.css}">
+    <link rel="stylesheet" th:href="@{/css/request.css}">
     <meta charset="UTF-8">
     <title>24pay</title>
 </head>
@@ -9,10 +10,10 @@
     <div class="container">
         <div class="content">
             <img src="https://24-pay.sk/wp-content/uploads/2023/05/24-pay-logo-white-bg.png" class="payment-logo">
-             <form action="#" th:action="@{/payment}" th:object="${payment}" method="post">
-                 <label>Amount</label><br />
-                 <input class="amount-input" type="number" min="1" step="0.01" placeholder="0.00" th:field="*{amount}" pattern="\d*(\.[0-9][0-9])?$"/><br />
-                 <input class="payment-button" type="submit" value="Zaplatiť"/>
+             <form action="#" th:action="@{/payment}" th:object="${payment}" method="post" id="form">
+                 <label for="amount">Amount</label><br />
+                 <input class="amount-input" id="amount" type="number" min="1" step="0.01" placeholder="0.00" th:field="*{amount}" pattern="\d*(\.[0-9][0-9])?$"/><br />
+                 <input class="payment-button" type="submit" value="Zaplatiť" id="submitBtn"/>
              </form>
         </div>
     </div>

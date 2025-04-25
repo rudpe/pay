@@ -5,14 +5,12 @@ import com.payment.pay.models.PaymentConst;
 import com.payment.pay.models.PaymentResult;
 import com.payment.pay.services.PaymentRestClient;
 import com.payment.pay.services.PaymentService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 
 
 @Controller
@@ -35,16 +33,18 @@ public class PaymentController {
     }
 
     @GetMapping("/rurl")
-    public String paymentResult(Model model, @RequestParam("Result") String result, @RequestParam("Sign") String sign, @RequestParam("Amount") String amount) {
+    public String paymentResult(Model model, @RequestParam("Result") String result, @RequestParam("Sign") String sign, @RequestParam("Amount") String amount, @RequestParam("CurrCode") String currency) {
         boolean signValid = paymentService.validateResponseSign(paymentConst.getMsTxnId(), amount, paymentConst.getCurrAlphaCode(), result, paymentConst.getKey(), paymentConst.getMid(), sign);
-        model.addAttribute("paymentResult", new PaymentResult(amount, signValid, paymentConst.getMsTxnId(), result));
+        model.addAttribute("paymentResult", new PaymentResult(amount, signValid, paymentConst.getMsTxnId(), result, currency));
         return "rurl";
     }
 
     @PostMapping("/payment")
     public Object paymentSubmit(@ModelAttribute Payment payment) {
-        String timeStamp = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss").format(LocalDateTime.now());
-        paymentConst.setTimestamp(timeStamp);
+        if (payment.getAmount() == null || payment.getAmount() < 1) {
+            return new ResponseEntity<>("Neplatná hodnota.", HttpStatus.BAD_REQUEST);
+        }
+        paymentConst.setTimestamp(paymentService.getPaymentTimestamp());
         paymentConst.setMsTxnId(paymentService.getPaymentUniqueId());
         ResponseEntity<String> responseLicenseCheck = paymentRestClient.getPaymentRestClient().post()
                 .uri("pay_gate/paygt")

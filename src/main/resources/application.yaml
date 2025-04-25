@@ -14,7 +14,6 @@ payment:
   email: jozko.durko@demo.sk
   firstName: jozko
   familyName: durko
-  timestamp: 2025-04-24 13:00:00
   redirectSign: true
   debug: true
 

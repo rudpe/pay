@@ -1,0 +1,22 @@
+.content {
+    padding: 20px;
+    border: 1px solid #333333;
+}
+
+.state-ok {
+    background: #04AA6D;
+    padding: 5px;
+    color: white;
+}
+
+.state-fail {
+    background: #FF0000;
+    padding: 5px;
+    color: white;
+}
+
+.state-pending {
+    background: #ffd966;
+    padding: 5px;
+    color: white;
+}
