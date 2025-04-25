@@ -1,0 +1,20 @@
+server:
+  port: 8024
+
+basePaymentUrl: https://test.24-pay.eu/
+
+payment:
+  mid: demoOMED
+  eshopId: 11111111
+  key: 1234567812345678123456781234567812345678123456781234567812345678
+  rurl: http://127.0.0.1:8024/rurl
+  currAlphaCode: EUR
+  msTxnId: 12345
+  clientId: 12345
+  email: jozko.durko@demo.sk
+  firstName: jozko
+  familyName: durko
+  timestamp: 2025-04-24 13:00:00
+  redirectSign: true
+  debug: true
+

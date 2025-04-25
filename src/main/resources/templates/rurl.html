@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Payment result</title>
+</head>
+<body>
+  <h1>Payment result</h1>
+  <h1>Result</h1>
+  <p th:text="'amount: ' + ${paymentResult.amount}" />
+  <p th:text="'podpis ok: ' + ${paymentResult.signValid}" />
+  <a href="/request">New payment</a>
+</body>
+</html>
